@@ -1,8 +1,11 @@
 const { User } = require('../model/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { bblSort } = require('../test');
+const fs = require('fs');
+const { response } = require('express');
+
 require('dotenv').config();
+
 async function createUser(body) {
   try {
     const resp = await User.create(body);
@@ -15,7 +18,6 @@ async function createUser(body) {
 async function getUser(email, password) {
   try {
     let response = await User.findOne({ email });
-
     const isValidUser = await bcrypt.compare(password, response.password);
     if (isValidUser) {
       const token = jwt.sign(
@@ -32,6 +34,42 @@ async function getUser(email, password) {
     } else {
       return { response: false };
     }
+  } catch (error) {
+    throw error;
+  }
+}
+async function updateUser(id, body, file) {
+  try {
+    let image = file.buffer;
+    // console.log('image is new ', image);
+    const { phoneNo, joinDate, level, cnic, team, organization, location } =
+      body;
+
+    const res = await User.updateOne(
+      { _id: id },
+      {
+        $set: {
+          phoneNo: phoneNo,
+          joinDate: joinDate,
+          level: level,
+          cnic: cnic,
+          team: team,
+          organization: organization,
+          location: location,
+          image: image,
+        },
+      }
+    );
+    return res;
+  } catch (error) {
+    // throw new Error(error.message);
+    throw error;
+  }
+}
+async function saveuser(result) {
+  try {
+    const response = await User.create(result);
+    return response;
   } catch (error) {
     throw error;
   }
@@ -67,10 +105,9 @@ async function getByPhoneNo(phoneNo, page, limit) {
     throw error;
   }
 }
-async function saveCsv() {}
 module.exports.createUser = createUser;
+module.exports.updateUser = updateUser;
 module.exports.getUser = getUser;
 module.exports.getAllUser = getAllUser;
 module.exports.getByPhoneNo = getByPhoneNo;
-module.export.saveCsv = saveCsv;
-// module.exports.getlimit = getlimit;
+module.exports.saveuser = saveuser;

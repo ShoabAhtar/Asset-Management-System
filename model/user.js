@@ -4,43 +4,49 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  uniqueId: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+
   email: {
     type: String,
     required: true,
     unique: true,
+  },
+  role: {
+    type: String,
   },
   phoneNo: {
     type: String,
   },
   password: {
     type: String,
-    // required: true,
-  },
-  country: {
-    type: String,
+    required: true,
   },
   joinDate: {
     type: String,
+    default: null,
   },
   level: {
     type: String,
+    default: null,
   },
   cnic: {
     type: String,
+    default: null,
   },
   team: {
     type: String,
+    default: null,
   },
   organization: {
     type: String,
+    default: null,
   },
   location: {
-    type: Boolean,
+    type: String,
+    default: null,
+  },
+  image: {
+    type: String,
+    default: null,
   },
 });
 userSchema.method({

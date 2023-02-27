@@ -66,7 +66,7 @@ userRouter.put(
     } catch (error) {}
   }
 );
-userRouter.post('/login', async (req, res) => {
+userRouter.get('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const { response, token } = await getUser(email, password);

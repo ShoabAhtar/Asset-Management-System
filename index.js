@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-// const jwt = require('jsonwebtoken');
+const file = require('fs');
 const userRouter = require('./routes/user');
 const assetRouter = require('./routes/asset');
 const trackingRouter = require('./routes/tracking');
@@ -15,6 +15,6 @@ app.use(bodyParser.json());
 app.use('/user', userRouter);
 app.use('/asset', assetRouter);
 app.use('/tracking', trackingRouter);
-// const port = process.env.PORT || 2000;
-// console.log('port no is ', port);
-app.listen(2000);
+const PORT = process.env.PORT || 2000;
+app.listen(PORT);
+console.log('server is running on PORT', PORT);
